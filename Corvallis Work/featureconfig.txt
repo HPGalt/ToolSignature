@@ -1,0 +1,8 @@
+64 # n° Areas
+64 # n° Angles
+64 # n° centroids
+10 # lengh of run lengh
+20 # lengh of the chain code (gaussian)
+20 # lengh of the chain code
+# area of edge track (?? bel problema)
+64 # n° cells
