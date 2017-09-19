@@ -79,19 +79,6 @@ public class randomForestFunctions {
        retValue[0]= oldClassLabel;
        retValue[1]= Integer.toString(prediction);
         
-        /*
-        out.println(evaluation.toSummaryString("\nResults\n======\n", true));
-        out.println(evaluation.toClassDetailsString());
-        out.println("Results For Class -1- ");
-        out.println("Precision=  " + evaluation.precision(0));
-        out.println("Recall=  " + evaluation.recall(0));
-        out.println("F-measure=  " + evaluation.fMeasure(0));
-        out.println("Results For Class -2- ");
-        out.println("Precision=  " + evaluation.precision(1));
-        out.println("Recall=  " + evaluation.recall(1));
-        out.println("F-measure=  " + evaluation.fMeasure(1)); 
-        out.close();
-        */
     }
 	public randomForestFunctions() {
 		super();

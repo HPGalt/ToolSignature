@@ -45,7 +45,8 @@ public class FileAnalizer  {
     
     public String[][] returnText = new String[4][12];
 	
-
+    
+    
     
 	// features
 	
@@ -100,11 +101,10 @@ public class FileAnalizer  {
      * This function load image and using the selected algoritms, or the list of Features
      * output the arranged list of feature
      */
-    public void loadImge(File loadedFile, Boolean[] arrayOfFeatures, String author, int toTest, Boolean ifICDAR){
-    	int sel = 1;
-    	if (toTest == 2){
-    		sel = 2;
-    	}
+    public void loadImge(File loadedFile, Boolean[] arrayOfFeatures, String author, Boolean ifICDAR){
+    	int sel = 2;
+    	
+    	
     	this.fileImage = loadedFile;
     	this.selector = sel;
     	
@@ -145,7 +145,7 @@ public class FileAnalizer  {
     /*
      * Function adapted to lead the whole data sets by features selection 
      */
-    public void loadDataSet(Boolean[] arrayofFeatures, Boolean ifICDAR) throws IOException, ParseException{
+    public void loadDataSet(Boolean[] arrayofFeatures, Boolean ifICDAR, String pathFolder) throws IOException, ParseException{
     	
     	JSONParser parser = new JSONParser();
     	Reader reader = new FileReader("config.json");
@@ -156,6 +156,15 @@ public class FileAnalizer  {
     	
     	// File representing the folder that you select using a FileChooser
         File dir = new File(pathDB);
+        
+        if (!pathFolder.equals("")){
+        	File dirpath = new File(pathFolder);
+        	if (dirpath.isDirectory()) {
+        		// check if the pharamether path is correwct
+        		dir = new File(pathFolder);
+        	}
+        }
+        
         if (dir.isDirectory()) { // make sure it's a directory
         	for (final File f : dir.listFiles(IMAGE_FILTER)) {
                 BufferedImage img = null;
@@ -168,7 +177,7 @@ public class FileAnalizer  {
                     //ImageIO.write(img, "png", outputfile);
                     authName = "";
                     authName = "" + f.getName();                   
-                    loadImge(f, arrayofFeatures, authName, 2, ifICDAR);                  
+                    loadImge(f, arrayofFeatures, authName, ifICDAR);                  
                     authName = "";
                 } catch (final IOException e) {
                     // handle errors here
@@ -182,7 +191,7 @@ public class FileAnalizer  {
     /*
      * Function that save each model Distance or SVM via features selection
      */
-    public void saveTheModel(Boolean[] arrayOfFeatures, Boolean[] arrayOfAlg, String author){
+    public void saveTheModel(Boolean[] arrayOfFeatures, Boolean[] arrayOfAlg, String author, int tgenuine, int tfake, int tforged){
     	
     	// collect CSV data into 2 arrays
     	double[][] xtrain = null;
@@ -282,9 +291,7 @@ public class FileAnalizer  {
     	*roba a finire solo quando ho finito i traduttori
     	*quindi un passo alla volta
     	*- distanza euclidea
-    	*- knn
     	*- SVM
-    	*- random tree
     	* ***********************************/
     	for (int i = 0; i < (fileFeatureName.length) ;i++){
     		String fileFName ="";
@@ -294,11 +301,15 @@ public class FileAnalizer  {
     				int dimFeatureContent = mappafeature.get(fileFName);
     				double[] distanceMeanVect = new double[dimFeatureContent];
     				
-    				
     				int howManyGoodAuth = 0;
+    				int howManyBadAuth = 0;
+    				int howManyFakeAuth = 0;
     				int totalAauthors =0;
     			 	reader = new CSVReader(new FileReader(fileFName + ".csv"));
-    			 	int nrows = countRows(fileFName + ".csv");
+    			 	//int nrows = countRows(fileFName + ".csv");
+    			 	
+    			 	int nrows = tgenuine + tfake + tforged;
+    			 	
     			 	
     			 	xtrain = new double[nrows][dimFeatureContent];
     			 	ytrain = new double[nrows][1];
@@ -307,37 +318,48 @@ public class FileAnalizer  {
     			 	int k = 0,j =0;
     			 	while ((nextLine = reader.readNext()) != null) {
     			 		// Tip: faccio finta che TUTTE le altre classi siano false
-    			 		
     			 		// checking the author
-    			 		//System.out.println("distanceMeanVect: " +distanceMeanVect.length);
-    			 		
+    			 		//System.out.println("distanceMeanVect: " +distanceMeanVect.length);    			 		
     			 		if (nextLine[0].equals(author)){     			 			
-    			 			// a good author line of this feature
-    			 			howManyGoodAuth++;
-    			 			//load into distanceMeanVect & xtrain for SVM
-    			 			for (int Kline = 3; Kline < nextLine.length; Kline++){
-    			 				//System.out.println("Kline: " + nextLine[Kline] + ", " + Kline );
-    			 				//System.out.println("inserito: " +distanceMeanVect[Kline-3]);
-    			 				// faccio la somma per il vettore media 
-    			 				distanceMeanVect[Kline-3] += Double.parseDouble(nextLine[Kline]);    
-    			 				xtrain[totalAauthors][Kline-3] = Double.parseDouble(nextLine[Kline]); 
+    			 			// a good author line of this feature exo 10 signs
+    			 			if (howManyGoodAuth < tgenuine){    			 				    			 		
+	    			 			howManyGoodAuth++;
+	    			 			//load into distanceMeanVect & xtrain for SVM
+	    			 			for (int Kline = 3; Kline < nextLine.length; Kline++){
+	    			 				//System.out.println("Kline: " + nextLine[Kline] + ", " + Kline );
+	    			 				//System.out.println("inserito: " +distanceMeanVect[Kline-3]);
+	    			 				// faccio la somma per il vettore media 
+	    			 				distanceMeanVect[Kline-3] += Double.parseDouble(nextLine[Kline]);    
+	    			 				xtrain[totalAauthors][Kline-3] = Double.parseDouble(nextLine[Kline]); 
+	    			 			}
+	    			 			ytrain[totalAauthors][0] = 1;    			 			
+	    			 			totalAauthors++;
     			 			}
-    			 			ytrain[totalAauthors][0] = 1;    			 			
-    			 			totalAauthors++;
-	    			 	} else {
-	    			 		//different author or considered as _FAKE_
-	    			 		//load into xtrain for SVM
-    			 			for (int Kline = 3; Kline < nextLine.length; Kline++){   
-    			 				xtrain[totalAauthors][Kline-3] = Double.parseDouble(nextLine[Kline]); 
-    			 			}
-    			 			ytrain[totalAauthors][0] = -1;    			 			
-    			 			totalAauthors++;
-	    			 		
+	    			 	} else { // ONLYH BAD SIGNS HERE	    			 		
+	    			 		if (nextLine[0].equals(author+"_F")){ 
+	    			 			//different author or considered as FORGED exp 50 signs
+	    			 			if (howManyFakeAuth < tforged){ 
+	    			 				howManyFakeAuth++;
+	    			 				for (int Kline = 3; Kline < nextLine.length; Kline++){   
+		    			 				xtrain[totalAauthors][Kline-3] = Double.parseDouble(nextLine[Kline]); 
+		    			 			}
+		    			 			ytrain[totalAauthors][0] = -1;    			 			
+		    			 			totalAauthors++;
+	    			 			}
+	    			 		} else {
+	    			 			//different author or considered as FAKE exo 200 signs
+	    			 			if (howManyFakeAuth < tfake){ 
+	    			 				howManyBadAuth++;
+	    			 				for (int Kline = 3; Kline < nextLine.length; Kline++){   
+		    			 				xtrain[totalAauthors][Kline-3] = Double.parseDouble(nextLine[Kline]); 
+		    			 			}
+		    			 			ytrain[totalAauthors][0] = -1;    			 			
+		    			 			totalAauthors++;
+	    			 			}
+	    			 		}	    			 			    			 	
 	    			 	}
 	    		     }
     			 	// ho scorso tutto il CSV delle feature "filename"
-    			 	
-    			 	
     			 	
     			 	//threshold distance
     			 	if (arrayOfAlg[0]){    					
@@ -363,7 +385,7 @@ public class FileAnalizer  {
 	    	 			 * scrivo e salvo il valore di soglia per quell'autore e il relativo vettore themplate
 	    	 			 * autore, soglia, valori[];
 	    	 			 */
-	    	 			String csvName = "models/" + fileFName + "_"+ author +"_Distance.csv";
+	    	 			String csvName = "models/" + fileFName + "_"+ author + "_" + tgenuine + "_"+ tfake + "_"+ tforged +"_Distance.csv";
 						String dataFeature = "";
 						for( int jk=0; jk <distanceMeanVect.length; jk++ ) {
 							dataFeature += String.valueOf(distanceMeanVect[jk]) + ";";
@@ -391,14 +413,12 @@ public class FileAnalizer  {
     					// Creating Model
     					svm_model m = svmFunctions.svmTrain(xtrain,ytrain);
     					
-    					svm.svm_save_model("models/"+ fileFName + "_"+ author +"_SVM.dat", m);
+    					svm.svm_save_model("models/"+ fileFName + "_"+ author + "_" + tgenuine + "_"+ tfake + "_"+ tforged +"_SVM.dat", m);
     					
     					System.out.println("Training SVM model calculated");
     					// TODO
     					//double[] ypred = svmPredict(xtest, m); 
     				}
-    			 	
-    			 	
     			 	
     		} catch (FileNotFoundException e) {
     				// TODO Auto-generated catch block

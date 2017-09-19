@@ -91,8 +91,7 @@ public class icdarAlgorithm {
 		try {
 			savedData = loadJsonData();
 		} 
-		catch (IOException | ParseException e1) {
-			// TODO Auto-generated catch block
+		catch (IOException | ParseException e1) {			
 			e1.printStackTrace();
 		}
 		
@@ -141,7 +140,6 @@ public class icdarAlgorithm {
 				String dataFeature;
 				String lineToWrite;
 				String [] analyseddata;
-				double angle;
 				String newline = "";
 				
 				// json data reader
@@ -150,7 +148,7 @@ public class icdarAlgorithm {
 				
 				
 				switch (i) {
-				case 0:
+				case 0: // TODO lable marker for AreaFeature
 					// Daramola AreaFeature
 					System.out.println("Processing AreaFeature..." + newline);
 					
@@ -185,13 +183,12 @@ public class icdarAlgorithm {
 						writer = new CSVWriter(mFileWriter);
 						writer.writeNext(analyseddata);
 						writer.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
+					} catch (IOException e) {						
 						e.printStackTrace();
 					}
 					break;
 				
-				case 1:
+				case 1: // TODO lable marker for PixelsIncidenceAngle
 					// Daramola PixelsIncidenceAngle
 					System.out.println("Processing PixelsIncidenceAngle..." + newline);
 					
@@ -227,12 +224,11 @@ public class icdarAlgorithm {
 						writer.writeNext(analyseddata);
 						writer.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					break;	
 				
-				case 2:
+				case 2: // TODO lable marker for Centroid Incidence Angle
 					// Daramola Centroid Incidence Angle
 					System.out.println("Processing CentroidIncidenceAngle..." + newline);
 					
@@ -265,13 +261,12 @@ public class icdarAlgorithm {
 						writer = new CSVWriter(mFileWriter);
 						writer.writeNext(analyseddata);
 						writer.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
+					} catch (IOException e) {					
 						e.printStackTrace();
 					}
 					break;	
 									
-				case 3:
+				case 3: // TODO lable marker for RunLength Pdf
 					// Tabessa RunLength Pdf 
 					System.out.println("Processing RunLengthPdfFeature..." + newline);
 					
@@ -307,13 +302,12 @@ public class icdarAlgorithm {
 						writer = new CSVWriter(mFileWriter);
 						writer.writeNext(analyseddata);
 						writer.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
+					} catch (IOException e) {					
 						e.printStackTrace();
 					}
 					break;						
 										
-				case 4:
+				case 4:  // TODO lable marker for GaussianFiltered ChainCode Pdf 
 					// Griffith GaussianFiltered ChainCode Pdf 
 					System.out.println("Processing GaussianFilteredChainCodePdf..." + newline);
 					
@@ -328,7 +322,7 @@ public class icdarAlgorithm {
 					}
 										
 					//  
-					ImagePlus GausFilimage = PreProcessingFactory.getPreProcess(PreprocessingType.MeanFilter).execute(image);
+					// ImagePlus GausFilimage = PreProcessingFactory.getPreProcess(PreprocessingType.MeanFilter).execute(image);
 					//this.saveImage(GausFilimage, "Gaustemp.png");
 					
 					// NON CALCOLA!
@@ -351,12 +345,11 @@ public class icdarAlgorithm {
 						writer.writeNext(analyseddata);
 						writer.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					break;	
 										
-				case 5:
+				case 5: // TODO lable marker for Directions Pdf Feature
 					// Qatar Directions Pdf Feature
 					System.out.println("Processing DirectionsPdf..." + newline);
 					//  
@@ -397,12 +390,11 @@ public class icdarAlgorithm {
 						writer.writeNext(analyseddata);
 						writer.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					break;
 					
-				case 6:
+				case 6: // TODO lable marker for Curvature Pdf Feature
 					// Qatar Curvature Pdf Feature
 					System.out.println("Processing CurvaturePdf..." + newline);
 					
@@ -437,12 +429,11 @@ public class icdarAlgorithm {
 						writer.writeNext(analyseddata);
 						writer.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					break;	
 					
-				case 7:
+				case 7: // TODO lable marker for TortuosityFeature
 					// Qatar TortuosityFeature ( TortuosityPdfFeature )
 					System.out.println("Processing TortuosityPdf..." + newline);
 					//  	
@@ -481,12 +472,11 @@ public class icdarAlgorithm {
 						writer.writeNext(analyseddata);
 						writer.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					break;					
 					
-				case 8:	
+				case 8:	 // TODO lable marker for ChainCodePdfFeature 
 					// Qatar ChainCodePdfFeature 
 					System.out.println("Processing ChainCodePdf..." + newline);
 					
@@ -525,12 +515,11 @@ public class icdarAlgorithm {
 						writer.writeNext(analyseddata);
 						writer.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					break;			
 					
-				case 9:
+				case 9: // TODO lable marker for  EdgeTrackPdfFeature 
 					// Qatar EdgeTrackPdfFeature 
 					System.out.println("Processing EdgeTrackPdf..." + newline);
 					
@@ -564,12 +553,11 @@ public class icdarAlgorithm {
 						writer.writeNext(analyseddata);
 						writer.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					break;							
 
-				case 10:
+				case 10: // TODO lable marker for  LocalBinaryPatternPdfFeature 
 					// Sabanci LocalBinaryPatternPdfFeature
 					System.out.println("Processing LocalBinaryPatternPdf..." + newline);
 					
@@ -613,12 +601,11 @@ public class icdarAlgorithm {
 						writer.writeNext(analyseddata);
 						writer.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					break;	
 	
-				case 11:
+				case 11:  // TODO lable marker for  HistogramOfOrientedGradientsPdfFeature
 					// Sabanci HistogramOfOrientedGradientsPdfFeature
 					System.out.println("Processing HistogramOfOrientedGradientsPdf..." + newline);
 					
@@ -662,7 +649,6 @@ public class icdarAlgorithm {
 						writer.writeNext(analyseddata);
 						writer.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					break;
@@ -685,49 +671,6 @@ public class icdarAlgorithm {
 			e.printStackTrace();
 		}
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	    /*CSVReader reader;
-		try {
-			reader = new CSVReader(new FileReader("yourfile.csv"));
-		     String [] nextLine;
-		     while ((nextLine = reader.readNext()) != null) {
-		        // nextLine[] is an array of values from the line
-		        System.out.println(nextLine[0] + nextLine[1] + "etc...");
-		     }
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
-		
-		
-		
-	    
-		/*
-		System.out.println(f1);
-		System.out.println(Arrays.toString(f2));
-		System.out.println(Arrays.toString(f3));
-		*/
 	}
 	
 	
@@ -750,7 +693,6 @@ public class icdarAlgorithm {
 			savedData = loadJsonData();
 		} 
 		catch (IOException | ParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		

@@ -19,7 +19,7 @@ public class MainClass {
 
 	public MainClass() {		
 
-		ImageChooser ja = new ImageChooser();
+		RouteSelector ja = new RouteSelector();
 		ja.setVisible(true);
 		ja.setLocationRelativeTo(null);
 		

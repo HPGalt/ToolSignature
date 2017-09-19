@@ -71,21 +71,6 @@ public class ImageChooser extends JFrame {
 	static private final String newline = "\n";
 	private JRadioButton rdbtnIcdarStyle;
 	 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ImageChooser frame = new ImageChooser();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -113,7 +98,7 @@ public class ImageChooser extends JFrame {
 		
 		
 		nameField = new JTextField();
-		nameField.setBounds(371, 84, 202, 19);
+		nameField.setBounds(350, 130, 100, 19);
 		nameField.setCaretColor(Color.BLACK);
 		nameField.setAlignmentY(Component.TOP_ALIGNMENT);
 		
@@ -127,15 +112,15 @@ public class ImageChooser extends JFrame {
 		panel_1.setLayout(null);
 		
 		logArea = new JTextArea();
-		logArea.setBounds(596, 3, 301, 425);
+		//logArea.setBounds(1, 1, 278, 70);
 		logArea.setDisabledTextColor(Color.BLACK);
 		//logArea.setEnabled(false);
 		//logArea.setEditable(false);
-		panel_1.add(logArea);
+		//panel_1.add(logArea);
 		
 		
 	    JScrollPane scroll = new JScrollPane(logArea);
-	    scroll.setBounds(596, 3, 301, 425);
+	    scroll.setBounds(329, 350, 568, 72);
 	    scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 	    //Add Textarea in to middle panel
@@ -146,7 +131,7 @@ public class ImageChooser extends JFrame {
 		nameField.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Author");
-		lblNewLabel.setBounds(318, 85, 43, 19);
+		lblNewLabel.setBounds(329, 95, 43, 19);
 		panel_1.add(lblNewLabel);
 		
 		JLabel lblFeaturesSelector = new JLabel("FEATURE LIST");
@@ -155,7 +140,7 @@ public class ImageChooser extends JFrame {
 		panel_1.add(lblFeaturesSelector);
 		
 		loadButton = new JButton("Load");
-		loadButton.setBounds(308, 29, 278, 29);
+		loadButton.setBounds(468, 20, 133, 72);
 		panel_1.add(loadButton);
 		
 		loadButton.setIcon(new ImageIcon("C:\\Users\\Francesco\\EclipseWorkspace\\modulo_base\\src\\Open16.gif"));
@@ -322,21 +307,21 @@ public class ImageChooser extends JFrame {
 		
 		JLabel lblAlgorithmsList = new JLabel("ALGORITHMS LIST");
 		lblAlgorithmsList.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAlgorithmsList.setBounds(308, 217, 278, 14);
+		lblAlgorithmsList.setBounds(618, 11, 170, 32);
 		panel_1.add(lblAlgorithmsList);
 		
 		Panel panel_CLASS = new Panel();
-		panel_CLASS.setBounds(308, 237, 279, 107);
+		panel_CLASS.setBounds(618, 49, 170, 107);
 		panel_1.add(panel_CLASS);
 		panel_CLASS.setLayout(null);
 		
-		JCheckBox algobox1 = new JCheckBox("K-NearestNeighbor");
+		JCheckBox algobox1 = new JCheckBox("K-Nearest Neighbor");
 		algobox1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				arrayOfAlg[2] = algobox1.isSelected();
 			}
 		});
-		algobox1.setBounds(6, 57, 267, 23);
+		algobox1.setBounds(6, 57, 155, 23);
 		panel_CLASS.add(algobox1);
 		
 		JCheckBox chckbxSupportVectorMachine = new JCheckBox("Support Vector Machine");
@@ -345,7 +330,7 @@ public class ImageChooser extends JFrame {
 				arrayOfAlg[1] = chckbxSupportVectorMachine.isSelected();
 			}
 		});
-		chckbxSupportVectorMachine.setBounds(6, 33, 267, 23);
+		chckbxSupportVectorMachine.setBounds(6, 33, 155, 23);
 		panel_CLASS.add(chckbxSupportVectorMachine);
 		
 		JCheckBox chckbxRandomForests = new JCheckBox("Random Forests ");
@@ -354,7 +339,7 @@ public class ImageChooser extends JFrame {
 				arrayOfAlg[3] = chckbxRandomForests.isSelected();
 			}
 		});
-		chckbxRandomForests.setBounds(6, 83, 267, 23);
+		chckbxRandomForests.setBounds(6, 83, 155, 23);
 		panel_CLASS.add(chckbxRandomForests);
 		
 		JCheckBox chckbxNewCheckBox = new JCheckBox("Algebraic Distance");
@@ -363,14 +348,14 @@ public class ImageChooser extends JFrame {
 				arrayOfAlg[0] = chckbxNewCheckBox.isSelected();
 			}
 		});
-		chckbxNewCheckBox.setBounds(6, 7, 138, 23);
+		chckbxNewCheckBox.setBounds(6, 7, 155, 23);
 		panel_CLASS.add(chckbxNewCheckBox);
 		
 		analizeButton = new JButton("Add Data");
 		panel_1.add(analizeButton);
-		analizeButton.setBounds(308, 140, 278, 34);
+		analizeButton.setBounds(468, 96, 133, 97);
 		
-		JButton btnNewButton = new JButton("Save the Models");
+		JButton btnNewButton = new JButton("Save Models");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// handler of secuting Model
@@ -424,7 +409,7 @@ public class ImageChooser extends JFrame {
 						*/
 						logArea.append("Training Selected Models for author" + authName + newline);
 		                
-						analizer.saveTheModel(arrayOfFeatures, arrayOfAlg, authName);
+						analizer.saveTheModel(arrayOfFeatures, arrayOfAlg, authName, 10, 50, 200);
 						// manage the results by CSV or print them: 
 		                System.out.println("... end." + newline);
 		                logArea.append("Data of "+authName+" stored" + newline);
@@ -434,13 +419,13 @@ public class ImageChooser extends JFrame {
 				
 			}
 		});
-		btnNewButton.setBounds(308, 352, 278, 29);
+		btnNewButton.setBounds(618, 164, 170, 29);
 		panel_1.add(btnNewButton);
 		
 		rdbtnIcdarStyle = new JRadioButton("ICDAR Name");
 		
 		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Fake Signture");
-		chckbxNewCheckBox_1.setBounds(396, 181, 120, 23);
+		chckbxNewCheckBox_1.setBounds(411, 305, 120, 23);
 		panel_1.add(chckbxNewCheckBox_1);
 		
 		JButton btnNewButton_1 = new JButton("Predict");
@@ -456,7 +441,7 @@ public class ImageChooser extends JFrame {
 		});
 		
 		
-		rdbtnNewRadioButton_1.setBounds(477, 6, 120, 21);
+		rdbtnNewRadioButton_1.setBounds(339, 60, 120, 21);
 		panel_1.add(rdbtnNewRadioButton_1);
 		
 		
@@ -542,7 +527,7 @@ public class ImageChooser extends JFrame {
 			}
 				
 		});
-		btnNewButton_1.setBounds(308, 388, 278, 29);
+		btnNewButton_1.setBounds(559, 302, 278, 29);
 		panel_1.add(btnNewButton_1);
 		
 		
@@ -563,7 +548,7 @@ public class ImageChooser extends JFrame {
 		});
 		
 		rdbtnNewRadioButton.setSelected(true);
-		rdbtnNewRadioButton.setBounds(318, 6, 127, 22);
+		rdbtnNewRadioButton.setBounds(339, 37, 119, 21);
 		panel_1.add(rdbtnNewRadioButton);
 		
 		
@@ -582,7 +567,7 @@ public class ImageChooser extends JFrame {
 				
 			}
 		});
-		rdbtnIcdarStyle.setBounds(477, 110, 109, 23);
+		rdbtnIcdarStyle.setBounds(339, 158, 109, 21);
 		panel_1.add(rdbtnIcdarStyle);
 		
 		JRadioButton rdbtnFilename = new JRadioButton("File Name");
@@ -593,7 +578,7 @@ public class ImageChooser extends JFrame {
 			}
 		});
 		rdbtnFilename.setSelected(true);
-		rdbtnFilename.setBounds(318, 110, 109, 23);
+		rdbtnFilename.setBounds(339, 110, 109, 21);
 		
 		
 		ButtonGroup nameorfilename= new ButtonGroup();
@@ -613,6 +598,10 @@ public class ImageChooser extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBounds(371, 63, 202, 19);
 		panel_1.add(lblNewLabel_1);
+		
+		JLabel lblImage = new JLabel("Image");
+		lblImage.setBounds(329, 20, 43, 19);
+		panel_1.add(lblImage);
 		
 
 		analizeButton.setVisible(false);
@@ -683,14 +672,14 @@ public class ImageChooser extends JFrame {
 				if (rdbtnNewRadioButton.isSelected()) {
 					// single selection
 					//TODO il chck se è dell'ICDAR					
-					analizer.loadImge(fileImage, arrayOfFeatures, authName, 2, rdbtnIcdarStyle.isSelected()); 
+					analizer.loadImge(fileImage, arrayOfFeatures, authName, rdbtnIcdarStyle.isSelected()); 
 					// 1 è per i test 2 è il caricamento normale
 				} else {
 					// Tutti i dati
 					System.out.println("Loading whole DataSet \n");
 					logArea.append("Loading whole DataSet in DB path" + newline);
 					try {
-						analizer.loadDataSet(arrayOfFeatures, rdbtnIcdarStyle.isSelected());
+						analizer.loadDataSet(arrayOfFeatures, rdbtnIcdarStyle.isSelected(), null);
 						// Carico l'intero data set da un pathname
 					} catch (IOException | ParseException e1) {
 						// TODO Auto-generated catch block

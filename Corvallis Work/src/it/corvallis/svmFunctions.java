@@ -7,39 +7,6 @@ import it.corvallis.libsvm.svm_problem;
 import libsvm.*;
 
 public class svmFunctions {
-
-	/* public static void main(String [] args) {
-
-      // to create te model
-      double[][] xtrain = ...
-      double[][] ytrain = ...
-      
-      //to create the test verify      
-      double[][] xtest = ...     
-      double[][] ytest = ...
-
-      svm_model m = svmTrain(xtrain,ytrain);
-
-      double[] ypred = svmPredict(xtest, m); 
-      for (int i = 0; i < xtest.length; i++){
-          System.out.println("(Actual:" + ytest[i][0] + " Prediction:" + ypred[i] + ")"); 
-      }  
-	  }
-	  */
-  public svm_model calculateSVM(double[][] dataSet, double[][] lableSet){
-	  svm_model prediction = null;
-	  
-	  // data seeds
-	  int record =  dataSet.length;
-	  int features = dataSet[0].length;
-	  
-	  double[][] ytrain = lableSet;
-      double[][] xtrain = dataSet;
-      
-	  
-	  
-	  return prediction;
-  }
 	
 	
   static svm_model svmTrain(double[][] xtrain, double[][] ytrain) {
